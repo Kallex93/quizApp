@@ -14,20 +14,28 @@
     <div class="container-fluid" id="top-container">
         
         <div class="row d-flex justify-content-around align-items-center text-center" id="top-row">
-            <div class="col-sm-2 col-12 btn-primary" id="top-score">Top Score</div>
-            <div class="col-sm-2 col-12" id="time">Time</div>
+            <div class="col-sm-2 col-12 btn-primary" id="top-score">TopScore: 1000</div>
+            <div class="col-sm-2 col-12" id="time">Time: 12:30</div>
         </div>
     </div>
 
     <div class="container container-fluid">
         <div class="row d-flex justify-content-center align-items-center text-center" id="question-row">
-            <div class="col-12" id="question-text">Question text will be shown here</div>
+            <div class="col-12" id="question-text">
+                <p>A simple Quiz Game:</p>
+                <p>Correct answers and speed will increase your score!</p>
+                <p>Press Start to begin!</p>
+            </div>
             
-            <div class="col-12 btn-grid" id="answer-buttons">
-                <button class="btn btn-primary">Answer 1</button>
-                <button class="btn btn-primary">Answer 2</button>
-                <button class="btn btn-primary">Answer 3</button>
-                <button class="btn btn-primary">Answer 4</button>
+            <div class="col-12 btn-grid hide" id="answer-buttons">
+                <button class="btn btn-primary ">Answer 1</button>
+                <button class="btn btn-primary ">Answer 2</button>
+                <button class="btn btn-primary ">Answer 3</button>
+                <button class="btn btn-primary ">Answer 4</button>
+            </div>
+
+            <div class="col-12" id="control-buttons">
+                <button class="btn btn-primary" id="start-btn">Start</button>
             </div>
         </div>
     </div>
