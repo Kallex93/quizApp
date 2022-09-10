@@ -14,8 +14,8 @@
     <div class="container-fluid" id="top-container">
         
         <div class="row d-flex justify-content-around align-items-center text-center" id="top-row">
-            <div class="col-sm-2 col-12 btn-primary" id="top-score">TopScore: 1000</div>
-            <div class="col-sm-2 col-12" id="time">Time: 12:30</div>
+            <div class="col-sm-2 col-12 btn-primary">Score:<p id="score">0</p></div>
+            <div class="col-sm-2 col-12">Time:<p id="time">0</p> </div>
         </div>
     </div>
 
@@ -43,5 +43,7 @@
     
 
     <script src="script.js"></script>
+    <script src="webworker.js"></script>
+    <script src="timeWebWorker.js"></script>
 </body>
 </html>

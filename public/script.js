@@ -1,11 +1,12 @@
+//DOM ELEMENTS & VARIABLES
 const questionContainer = document.getElementById('question-container');
 const startBtn = document.getElementById('start-btn');
 const nextBtn = document.getElementById('next-btn');
 const answerButtonsContainer = document.getElementById('answer-buttons');
 const questionText = document.getElementById('question-text');
+const score = document.getElementById('score');
 
-
-var shuffledQuestions, currentIndex;
+var shuffledQuestions, currentIndex, tempScore;
 
 if (startBtn) {
     startBtn.addEventListener('click', startGame);
@@ -18,14 +19,21 @@ if (nextBtn) {
     })
 }
 
-async function startGame(){
-    console.log("Game Started");
 
+//LOADS NECESSARY DATA AND STARTS THE GAME
+async function startGame(){
+    
+    console.log("Game Started");
+    
+    //REMOVE CONTROLS
     startBtn.classList.add('hide');
     answerButtonsContainer.classList.remove('hide');
-
     var question_list;
     currentIndex = 0;
+    tempScore = 0;
+    
+    //START COUNTING TIME WITH A WEBWORKER
+    startWorker();
     
     //LOAD QUESTIONS FILE
     var xhttp = new XMLHttpRequest();
@@ -47,13 +55,15 @@ async function startGame(){
 
 }
 
+
+//SET GAME WINDOW LAYOUT AND NEXT QUESTION
 function nextQuestion(){
     resetButtons();
     showQuestion(shuffledQuestions[currentIndex]);
 }
 
 
-//Removes buttons from previous question
+//CLEARS BUTTON STATUS OF THE PREVIOUS QUESTION
 function resetButtons(){
     clearStatusClass(questionContainer);
     nextBtn.classList.add('hide');
@@ -62,7 +72,7 @@ function resetButtons(){
     }
 }
 
-//Display new question in the box, creates answer buttons
+//CHANGE GAME LAYOUT TO DISPLAY A QUESTION AND HER ANSWER OPTIONS
 function showQuestion(question){
     questionText.innerText = question.question_text;
     question.options.forEach(answer => {
@@ -82,26 +92,45 @@ function showQuestion(question){
     });
 }
 
+
+//HANDLE THE ANSWER CHOSEN BY THE PLAYER AND SHOW RESULTS GRAPHICALLY.
+//PREPARES FOR THE NEXT QUESTION OR ENDS THE GAME
 function selectAnswer(e){
     const selected = e.target;
     const correct = selected.dataset.correct;
+
 
     setStatusClass(questionContainer, correct);
     Array.from(answerButtonsContainer.children).forEach(button => {
         setStatusClass(button, button.dataset.correct);
     });
+
     
 
     if (shuffledQuestions.length > currentIndex + 1) {
         nextBtn.classList.remove('hide');
+
     }else{
+
+        //Stop counting time and store its last value
+        
+        stopWorker();
+        const finalTime = document.getElementById('time').innerHTML;
+        console.log("Final Time: " + finalTime);
+        questionText.innerText = "The Quiz is over! Press Restart to try Again!";
+
         startBtn.innerText = 'Restart';
         startBtn.classList.remove('hide');
-        nextBtn.classList.add('hide');
+        //nextBtn.classList.add('hide');
         startBtn.addEventListener('click', backToStart);
+
+        nextBtn.innerText = 'Back to Home';
+        nextBtn.addEventListener('click', backToHome);
+        
     }
 
 }
+
 
 function setStatusClass(elem, correct){
     clearStatusClass(elem);
@@ -113,8 +142,8 @@ function setStatusClass(elem, correct){
     }
 
     nextBtn.classList.remove('hide');
-
 }
+
 
 function clearStatusClass(elem){
     elem.classList.remove('correct');
@@ -122,7 +151,13 @@ function clearStatusClass(elem){
 }
 
 
+//RESTART
 function backToStart(){
+    
+    //RESET BUTTON STATUS
+    nextBtn.innerText = 'Next';
+    nextBtn.removeEventListener('click', backToHome);
+
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -131,8 +166,12 @@ function backToStart(){
     };
     xhttp.open("GET", "/", true);
     xhttp.send();
+    
+
 }
 
 
-
+function backToHome() {
+    window.location.reload();
+}
 
