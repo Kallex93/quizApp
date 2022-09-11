@@ -1,12 +1,14 @@
+
 //DOM ELEMENTS & VARIABLES
 const questionContainer = document.getElementById('question-container');
 const startBtn = document.getElementById('start-btn');
+const rankBtn = document.getElementById('ranking-btn');
 const nextBtn = document.getElementById('next-btn');
 const answerButtonsContainer = document.getElementById('answer-buttons');
 const questionText = document.getElementById('question-text');
 const score = document.getElementById('score');
 
-var shuffledQuestions, currentIndex, tempScore;
+var shuffledQuestions, currentIndex, tempScore, playerName;
 
 if (startBtn) {
     startBtn.addEventListener('click', startGame);
@@ -19,14 +21,34 @@ if (nextBtn) {
     })
 }
 
+if (rankBtn) {
+    rankBtn.addEventListener('click', showRanking)
+}
+
+function showRanking() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("Redirected to Ranking page...");
+            console.log(xhttp.responseText)
+            window.location = xhttp.response;
+        }
+    };
+
+    xhttp.open("GET", "/ranking.html", true);
+    xhttp.send();
+}
+
 
 //LOADS NECESSARY DATA AND STARTS THE GAME
 async function startGame(){
     
     console.log("Game Started");
-    
+    playerName = window.prompt("Insert your nickname to save your score: ");
+
     //REMOVE CONTROLS
     startBtn.classList.add('hide');
+    rankBtn.classList.add('hide');
     answerButtonsContainer.classList.remove('hide');
     var question_list;
     currentIndex = 0;
@@ -39,7 +61,7 @@ async function startGame(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            // Typical action to be performed when the document is ready:
+            
             var data = JSON.parse(xhttp.responseText);
             
             console.log("Received (" + (typeof data) + ")" + data);
@@ -99,6 +121,10 @@ function selectAnswer(e){
     const selected = e.target;
     const correct = selected.dataset.correct;
 
+    if (correct) {
+        tempScore = tempScore + 10;
+        score.innerHTML = tempScore;
+    }
 
     setStatusClass(questionContainer, correct);
     Array.from(answerButtonsContainer.children).forEach(button => {
@@ -115,9 +141,13 @@ function selectAnswer(e){
         //Stop counting time and store its last value
         
         stopWorker();
-        const finalTime = document.getElementById('time').innerHTML;
-        console.log("Final Time: " + finalTime);
-        questionText.innerText = "The Quiz is over! Press Restart to try Again!";
+        const finalTime = parseInt(document.getElementById('time').innerHTML);
+        const finalScore = parseInt(document.getElementById('score').innerHTML);
+        const date = new Date().toLocaleDateString();
+
+        questionText.innerText = "The Quiz is over! Press Restart to try Again";
+
+        updateDB(playerName,finalScore,finalTime,date);
 
         startBtn.innerText = 'Restart';
         startBtn.classList.remove('hide');
@@ -126,12 +156,39 @@ function selectAnswer(e){
 
         nextBtn.innerText = 'Back to Home';
         nextBtn.addEventListener('click', backToHome);
-        
-    }
 
+    }
 }
 
 
+function updateDB(n, s, t, d){
+
+    var xhttp = new XMLHttpRequest();
+
+
+    let data = {
+        name : n,
+        score : s,
+        time : t,
+        date : d
+    }
+
+    console.log(data);
+
+    xhttp.open('POST', '/', true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.onreadystatechange = function() {
+        if(xhttp.readyState == 4 && xhttp.status == 200) {
+            alert(xhttp.responseText);
+        }
+    }
+    xhttp.send(JSON.stringify(data));
+    
+}
+
+
+//ADD CORRECT/WRONG FLAGS FROM ANSWERS
 function setStatusClass(elem, correct){
     clearStatusClass(elem);
 
@@ -140,18 +197,17 @@ function setStatusClass(elem, correct){
     } else {
         elem.classList.add('wrong');
     }
-
     nextBtn.classList.remove('hide');
 }
 
-
+//REMOVE CORRECT/WRONG FLAGS FROM ANSWERS
 function clearStatusClass(elem){
     elem.classList.remove('correct');
     elem.classList.remove('wrong');
 }
 
 
-//RESTART
+//RESTART THE QUIZ
 function backToStart(){
     
     //RESET BUTTON STATUS
@@ -167,10 +223,9 @@ function backToStart(){
     xhttp.open("GET", "/", true);
     xhttp.send();
     
-
 }
 
-
+//GO BACK TO HOME
 function backToHome() {
     window.location.reload();
 }
