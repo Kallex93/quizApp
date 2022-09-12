@@ -22,7 +22,7 @@ app.use(express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use(express.urlencoded({extended: false}));
 
 
-//HANDLE GET/POST REQUESTS
+//HANDLE GET/POST REQUESTS FROM CLIENT
 app.get('/', function(req,res){
     console.log("Requested Home Page");
     res.redirect('index.html');
