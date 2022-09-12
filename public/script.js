@@ -115,7 +115,7 @@ function selectAnswer(e){
     if (correct && firstAnswer) {
         tempScore = tempScore + 10;
         score.innerHTML = tempScore;
-        check = false;
+        firstAnswer = false;
     }
 
     setStatusClass(questionContainer, correct);
