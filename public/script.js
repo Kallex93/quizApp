@@ -25,20 +25,6 @@ if (rankBtn) {
     rankBtn.addEventListener('click', showRanking)
 }
 
-function showRanking() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log("Redirected to Ranking page...");
-            console.log(xhttp.responseText)
-            window.location = xhttp.response;
-        }
-    };
-
-    xhttp.open("GET", "/ranking.html", true);
-    xhttp.send();
-}
-
 
 //LOADS NECESSARY DATA AND STARTS THE GAME
 async function startGame(){
@@ -62,9 +48,11 @@ async function startGame(){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             
+            console.log("Received: " + xhttp.responseURL);
+
             var data = JSON.parse(xhttp.responseText);
             
-            console.log("Received (" + (typeof data) + ")" + data);
+            //console.log("Received (" + (typeof data) + ")" + data);
             question_list = Object.values(data.questions);
             shuffledQuestions = question_list.sort((a, b) => 0.5 - Math.random());
             console.log(question_list);
@@ -230,3 +218,17 @@ function backToHome() {
     window.location.reload();
 }
 
+
+function showRanking() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //console.log("Redirected to Ranking page...");
+            console.log(xhttp.responseURL)
+            window.location.href = xhttp.responseURL;
+        }
+    };
+
+    xhttp.open("GET", "/ranking", true);
+    xhttp.send();
+}

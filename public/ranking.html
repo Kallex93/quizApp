@@ -11,36 +11,39 @@
 </head>
 <body class="bg-dark text-white">
     
-    <div class=" container container-fluid">
-        <div class="table-responsive">
-            <table class="table table-primary">
-                <thead>
-                    <tr>
-                        <th scope="col">Player</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="">
-                        <td scope="row">R1C1</td>
-                        <td>R1C2</td>
-                        <td>R1C3</td>
-                    </tr>
-                    <tr class="">
-                        <td scope="row">Item</td>
-                        <td>Item</td>
-                        <td>Item</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center align-items-center text-center">
+            <div class="col">
+                <h1>RANKINGS</h1>
+            </div>
         </div>
     </div>
+        
+        <div class=" container container-fluid">
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Player</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Time(sec)</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-body">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row d-flex justify-content-center align-items-center text-center">
+            <div class="col-4">
+                <button class="btn btn-primary" id="back-btn">Back to Home</button>
+            </div>
+        </div>
     
+    <script src="rankScript.js"></script>
 
-    <script src="script.js"></script>
-    <script src="webworker.js"></script>
-    <script src="timeWebWorker.js"></script>
 </body>
 </html>
