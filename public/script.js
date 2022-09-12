@@ -115,9 +115,10 @@ function selectAnswer(e){
     if (correct && firstAnswer) {
         tempScore = tempScore + 10;
         score.innerHTML = tempScore;
-        firstAnswer = false;
+        
     }
 
+    firstAnswer = false;
     setStatusClass(questionContainer, correct);
     Array.from(answerButtonsContainer.children).forEach(button => {
         setStatusClass(button, button.dataset.correct);
