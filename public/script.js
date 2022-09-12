@@ -8,7 +8,7 @@ const answerButtonsContainer = document.getElementById('answer-buttons');
 const questionText = document.getElementById('question-text');
 const score = document.getElementById('score');
 
-var shuffledQuestions, currentIndex, tempScore, playerName;
+var shuffledQuestions, currentIndex, tempScore, playerName, firstAnswer;
 
 if (startBtn) {
     startBtn.addEventListener('click', startGame);
@@ -68,6 +68,7 @@ async function startGame(){
 
 //SET GAME WINDOW LAYOUT AND NEXT QUESTION
 function nextQuestion(){
+    firstAnswer = true;
     resetButtons();
     showQuestion(shuffledQuestions[currentIndex]);
 }
@@ -108,10 +109,13 @@ function showQuestion(question){
 function selectAnswer(e){
     const selected = e.target;
     const correct = selected.dataset.correct;
+    
 
-    if (correct) {
+    //CHECK CORRECT ANSWER, ADDS POINTS ONLY ON THE FIRST CLICK EVENT FIRED FOR THE CURRENT QUESTION
+    if (correct && firstAnswer) {
         tempScore = tempScore + 10;
         score.innerHTML = tempScore;
+        check = false;
     }
 
     setStatusClass(questionContainer, correct);
