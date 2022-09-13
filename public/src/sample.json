@@ -1,12 +1,13 @@
 {
-    "questions":[
-       {
+
+    "questions" : [
+        {
             "question_text" : "What time is it?",
             "options" : [
                 {"text": "Now", "correct" : true},
                 {"text": "Time to say goodbye", "correct":false},
                 {"text": "It's show time", "correct":false},
-                {"text": "There is no time...", "correct":false}
+                {"text": "Time does not exist...", "correct":false}
 
             ]
         },
@@ -24,20 +25,20 @@
         {
             "question_text" : "Who are you?",
             "options" : [
-                {"text":"Today", "correct": true},
-                {"text":"Not yesterday", "correct": true},
-                {"text": "Chicken", "correct":false},
-                {"text": "The day you were waiting for", "correct":false}
+                {"text":"Who who who who?", "correct": true},
+                {"text":"I'm you, but better", "correct": true},
+                {"text": "I am a banana", "correct":false},
+                {"text": "A fool", "correct":false}
             ]
         },
 
         {
-            "question_text" : "What is destiny?",
+            "question_text" : "Click a random button, it doesn't matter",
             "options" : [
-                {"text":"Today", "correct": true},
-                {"text":"Not yesterday", "correct": true},
-                {"text": "Chicken", "correct":false},
-                {"text": "The day you were waiting for", "correct":false}
+                {"text":"A battuno", "correct": true},
+                {"text":"Another button", "correct": true},
+                {"text": "The wrong button", "correct":false},
+                {"text": "Seriously..?", "correct":true}
             ]
         },
 

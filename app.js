@@ -28,11 +28,16 @@ app.get('/', function(req,res){
     res.redirect('index.html');
 });
 
-
-app.get('/questions.json', function(req, res){
-    console.log("Requested 'questions.json' ");
-    res.sendFile('questions.json');
+app.get('/ranking', function(req,res){
+    console.log("Requested ranking.html ");
+    res.redirect('/ranking.html');
 })
+
+app.get('/src/sample_questions.json', function(req, res){
+    console.log("Requested 'questions.json' ");
+    res.sendFile('src/sample_questions.json');
+})
+
 
 
 app.get('/rankingData', function(req,res){
@@ -43,12 +48,6 @@ app.get('/rankingData', function(req,res){
         .then((result) => {
             res.send(result);    
     }).catch();
-})
-
-
-app.get('/ranking', function(req,res){
-    console.log("Requested ranking.html ");
-    res.redirect('/ranking.html');
 })
 
 

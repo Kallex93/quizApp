@@ -1,4 +1,3 @@
-
 //DOM ELEMENTS & VARIABLES
 const questionContainer = document.getElementById('question-container');
 const startBtn = document.getElementById('start-btn');
@@ -8,7 +7,7 @@ const answerButtonsContainer = document.getElementById('answer-buttons');
 const questionText = document.getElementById('question-text');
 const score = document.getElementById('score');
 
-var shuffledQuestions, currentIndex, tempScore, playerName, firstAnswer;
+var shuffledQuestions, currentIndex, tempScore, playerName, firstAnswer, uploadCheck;
 
 if (startBtn) {
     startBtn.addEventListener('click', startGame);
@@ -39,7 +38,8 @@ async function startGame(){
     var question_list;
     currentIndex = 0;
     tempScore = 0;
-    
+    uploadCheck = true;
+
     //START COUNTING TIME WITH A WEBWORKER
     startWorker();
     
@@ -60,7 +60,7 @@ async function startGame(){
         }
     };
 
-    xhttp.open("GET", "questions.json", true);
+    xhttp.open("GET", "src/sample_questions.json", true);
     xhttp.send();
 
 }
@@ -140,8 +140,11 @@ function selectAnswer(e){
 
         questionText.innerText = "The Quiz is over! Press Restart to try Again";
 
-        updateDB(playerName,finalScore,finalTime,date);
+        if (uploadCheck) {
+            updateDB(playerName,finalScore,finalTime,date);            
+        }
 
+        uploadCheck = false;
         startBtn.innerText = 'Restart';
         startBtn.classList.remove('hide');
         //nextBtn.classList.add('hide');
@@ -237,3 +240,4 @@ function showRanking() {
     xhttp.open("GET", "/ranking", true);
     xhttp.send();
 }
+

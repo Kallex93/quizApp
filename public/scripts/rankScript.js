@@ -28,24 +28,17 @@ function showRankTable(data) {
 
     data.forEach(player => {
         
-        //console.log("PLAYER: " + player)
-
         var newRow = document.createElement('tr');
         var params = [player.name, player.score, player.time, player.date];
 
         params.forEach(elem => {
-
-            //console.log("Elem = " + elem);
-
             var newTD = document.createElement('td');
             newTD.innerText = elem;
             newRow.appendChild(newTD);
         })
 
         rankBody.appendChild(newRow);
-
     });
-
 }
 
 function backToHome() {
