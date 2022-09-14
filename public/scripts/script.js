@@ -48,14 +48,14 @@ async function startGame(){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             
-            console.log("Received: " + xhttp.responseURL);
+            console.log("Received from: " + xhttp.responseURL);
 
             var data = JSON.parse(xhttp.responseText);
             
             //console.log("Received (" + (typeof data) + ")" + data);
             question_list = Object.values(data.questions);
             shuffledQuestions = question_list.sort((a, b) => 0.5 - Math.random());
-            console.log(question_list);
+            //console.log(question_list);
             nextQuestion();
         }
     };
@@ -88,7 +88,7 @@ function showQuestion(question){
     questionText.innerText = question.question_text;
     question.options.forEach(answer => {
 
-        console.log("Button Text = " + answer.text);
+        //console.log("Button Text = " + answer.text);
         const button = document.createElement('button');
         button.innerText = answer.text;
         button.classList.add('btn');
@@ -169,7 +169,7 @@ function updateDB(n, s, t, d){
         date : d
     }
 
-    console.log(data);
+    console.log("New Player Data: " + data);
 
     xhttp.open('POST', '/', true);
     xhttp.setRequestHeader("Content-Type", "application/json");

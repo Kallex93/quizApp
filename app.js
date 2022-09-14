@@ -22,7 +22,8 @@ app.use(express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use(express.urlencoded({extended: false}));
 
 
-//HANDLE GET/POST REQUESTS FROM CLIENT
+//-------CONTROLLER------
+//HANDLE REQUESTS FROM CLIENT
 app.get('/', function(req,res){
     console.log("Requested Home Page");
     res.redirect('index.html');
@@ -37,7 +38,6 @@ app.get('/src/sample_questions.json', function(req, res){
     console.log("Requested 'questions.json' ");
     res.sendFile('src/sample_questions.json');
 })
-
 
 
 app.get('/rankingData', function(req,res){
@@ -69,5 +69,5 @@ app.post('/', async function(req,res){
     }
 })
 
-
+//START THE SERVER
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

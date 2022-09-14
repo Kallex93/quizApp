@@ -15,14 +15,14 @@ function startWorker() {
 
 function stopWorker() {
 
-  console.log(typeof(w));
+  //console.log(typeof(w));
 
   if(typeof(w) !== "undefined"){
-    console.log("Inside worker if");
+    //console.log("Inside worker if");
     w.terminate();
     w = undefined;
   }
 
-  console.log(typeof(w));
+  //console.log(typeof(w));
   
 }
